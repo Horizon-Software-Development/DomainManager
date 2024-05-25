@@ -32,6 +32,11 @@ def buy_domain(domain: str) -> None:
     except Exception as e:
         logging.error(f"Failed to create redirect for domain {domain}: {e}")
         return
+    return {
+        'name': domain,
+        'nameservers': _,
+        'id': zone_id
+    }
     
 def fix_nameservers() -> None:
     domains = cloudflare.get_all_domains()
@@ -54,27 +59,36 @@ def fix_redirects() -> None:
             logging.error(f"Failed to create redirect for domain {domain['name']}: {e}")
             continue
         time.sleep(2)
+
+def generate_all_inboxes() -> None:
+    domains = cloudflare.get_all_domains()
+    utils.create_domain_csv(domains)
     
 def main() -> None:
+    domains_to_output = []
     try:
         with open('input/buy.txt') as f:
             domains = f.readlines()
         for domain in domains:
             try:
-                buy_domain(domain.strip())
+                _ = buy_domain(domain.strip())
+                if _:
+                    domains_to_output.append(_)
             except Exception as e:
                 logging.error(f"Failed to register domain {domain.strip()}: {e}")
     except FileNotFoundError:
         logging.error("No domains to register.")
     except KeyboardInterrupt:
         logging.error("User interrupted the process.")
+    utils.create_domain_csv(domains_to_output)
 
 if __name__ == '__main__':
     cloudflare.assert_env_vars()
     utils.assert_env_vars()
-    main()
+    # main()
     # fix_nameservers()
     # fix_redirects()
+    generate_all_inboxes()
 
 
 

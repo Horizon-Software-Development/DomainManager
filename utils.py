@@ -3,7 +3,7 @@ import requests
 from requests.exceptions import RequestException, Timeout
 from namecheapapi import DomainAPI
 import os
-
+from faker import Faker
 
 @cache
 def get_my_ip(retries: int = 0) -> str:
@@ -34,7 +34,19 @@ NAMECHEAP = DomainAPI(
     sandbox=False
 )
 
-
 @cache
 def get_address() -> dict:
     return NAMECHEAP.get_contacts(os.getenv('NAMECHEAP_EXAMPLE_DOMAIN'))
+
+def create_domain_csv(domains: list[dict[str, str | list]]) -> None:
+    gen = Faker()
+    with open('output/inboxer.csv', 'w') as f:
+        f.write('Domain,Nameserver-1,Nameserver-2,Password,Redirect,Email-1,Email-2,Email-3,Name-1,Name-2,Name-3\n')
+        for domain in domains:
+            name_1 = gen.name()
+            name_2 = gen.name()
+            name_3 = gen.name()
+            email_1 = name_1.replace(' ', '').lower() + '@' + domain['name']
+            email_2 = name_2.replace(' ', '').lower() + '@' + domain['name']
+            email_3 = name_2.replace(' ', '').lower() + '@' + domain['name']
+            f.write(f"{domain['name']},{domain['nameservers'][0]},{domain['nameservers'][1]},{gen.password()},{os.getenv('CLOUDFLARE_REDIRECT_URL')},{email_1},{email_2},{email_3},{name_1},{name_2},{name_3}\n")

@@ -35,7 +35,6 @@ def _send_cloudflare_request(
         if not headers:
             headers = CLOUDFLARE_HEADERS or {}
         response = getattr(requests, method)(url, headers=headers, json=data, **kwargs)
-        print(response.json())
         response.raise_for_status()
         return response
     except Timeout:
