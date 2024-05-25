@@ -85,10 +85,10 @@ def main() -> None:
 if __name__ == '__main__':
     cloudflare.assert_env_vars()
     utils.assert_env_vars()
-    # main()
+    main()
     # fix_nameservers()
     # fix_redirects()
-    generate_all_inboxes()
+    # generate_all_inboxes()
 
 
 
