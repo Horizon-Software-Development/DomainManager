@@ -48,5 +48,5 @@ def create_domain_csv(domains: list[dict[str, str | list]]) -> None:
             name_3 = gen.name()
             email_1 = name_1.replace(' ', '').lower() + '@' + domain['name']
             email_2 = name_2.replace(' ', '').lower() + '@' + domain['name']
-            email_3 = name_2.replace(' ', '').lower() + '@' + domain['name']
+            email_3 = name_3.replace(' ', '').lower() + '@' + domain['name']
             f.write(f"{domain['name']},{domain['nameservers'][0]},{domain['nameservers'][1]},{gen.password()},{os.getenv('CLOUDFLARE_REDIRECT_URL')},{email_1},{email_2},{email_3},{name_1},{name_2},{name_3}\n")
