@@ -5,7 +5,14 @@ import logging
 import time
 import utils
 
-logging.basicConfig(filename='buy.log', level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('buy.log'),
+        logging.StreamHandler()
+    ]
+)
 
 def buy_domain(domain: str) -> None:
     try:
@@ -65,22 +72,36 @@ def generate_all_inboxes() -> None:
     utils.create_domain_csv(domains)
     
 def main() -> None:
+    print("🚀 Starting domain registration process...")
     domains_to_output = []
     try:
         with open('input/buy.txt') as f:
             domains = f.readlines()
-        for domain in domains:
+        print(f"📋 Found {len(domains)} domains to process")
+
+        for i, domain in enumerate(domains, 1):
+            domain = domain.strip()
+            print(f"\n[{i}/{len(domains)}] Processing domain: {domain}")
             try:
-                _ = buy_domain(domain.strip())
-                if _:
-                    domains_to_output.append(_)
+                result = buy_domain(domain)
+                if result:
+                    domains_to_output.append(result)
+                    print(f"✅ Successfully processed {domain}")
+                else:
+                    print(f"❌ Failed to process {domain}")
             except Exception as e:
-                logging.error(f"Failed to register domain {domain.strip()}: {e}")
+                print(f"💥 Error with {domain}: {e}")
+                logging.error(f"Failed to register domain {domain}: {e}")
     except FileNotFoundError:
+        print("❌ No input/buy.txt file found!")
         logging.error("No domains to register.")
     except KeyboardInterrupt:
+        print("\n⚠️ Process interrupted by user")
         logging.error("User interrupted the process.")
+
+    print(f"\n📊 Creating CSV for {len(domains_to_output)} successful domains...")
     utils.create_domain_csv(domains_to_output)
+    print("✨ Process complete!")
 
 if __name__ == '__main__':
     cloudflare.assert_env_vars()

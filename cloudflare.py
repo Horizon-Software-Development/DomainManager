@@ -25,16 +25,20 @@ def assert_env_vars() ->  bool:
         raise RuntimeError("Missing Cloudflare environment variables.")
 
 def _send_cloudflare_request(
-        endpoint: str, method='get', headers : dict = None, 
+        endpoint: str, method='get', headers : dict = None,
         data : dict = None, retries: int = 0, **kwargs
     ) -> requests.Response | NoReturn:
     url = f"{CLOUDFLARE_API_URL}/{endpoint}"
+    print(f"🌐 Making {method.upper()} request to: {url}")
     try:
         if not data:
             data = {}
         if not headers:
             headers = CLOUDFLARE_HEADERS or {}
         response = getattr(requests, method)(url, headers=headers, json=data, **kwargs)
+        print(f"📡 Response status: {response.status_code}")
+        if response.status_code >= 400:
+            print(f"❌ Response body: {response.text}")
         response.raise_for_status()
         return response
     except Timeout:
@@ -68,10 +72,25 @@ def get_all_domains() -> List[str]:
 
 def create_cloudflare_redirect(zone_id: str, pattern: str = '*') -> bool:
     data = {
-        "targets": [{"target": "url", "constraint": {"operator": "matches", "value": pattern}}],
-        "actions": [{"id": "forwarding_url", "value": {"url": CLOUDFLARE_REDIRECT_URL, "status_code": 301}}],
-        "priority": 1,
-        "status": "active"
+        "name": "Domain wildcard redirect",
+        "kind": "zone",
+        "phase": "http_request_dynamic_redirect",
+        "rules": [
+            {
+                "action": "redirect",
+                "action_parameters": {
+                    "from_value": {
+                        "status_code": 301,
+                        "target_url": {
+                            "value": CLOUDFLARE_REDIRECT_URL
+                        },
+                        "preserve_query_string": False
+                    }
+                },
+                "expression": f'(http.host contains "{pattern.replace("*", "")}")',
+                "enabled": True
+            }
+        ]
     }
-    response = _send_cloudflare_request(f'zones/{zone_id}/pagerules', method='post', headers=CLOUDFLARE_HEADERS, data=data)
+    response = _send_cloudflare_request(f'zones/{zone_id}/rulesets', method='post', headers=CLOUDFLARE_HEADERS, data=data)
     return response.status_code == 200

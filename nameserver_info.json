@@ -1,0 +1,194 @@
+[
+  {
+    "domain": "myautomatelabs.com",
+    "zone_id": "cbef625406db8f84cc67e38bd93f6df0",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomatesolutions.com",
+    "zone_id": "ffe13f1b7730de6c46134a96aae3f850",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomatesystems.com",
+    "zone_id": "4c20a8d8e9bbbd416c613d6e00220a19",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomationapps.com",
+    "zone_id": "5e0537863c4ebfcde0a5f62eb5fa3559",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomationcloud.com",
+    "zone_id": "3ad2971c46f725a9bb5928e70b454b2e",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomationdev.com",
+    "zone_id": "0e4650c62e6127c60b400b38b2d8209d",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomationglobal.com",
+    "zone_id": "ec628f802807cdbd4b72ce83fd520787",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomationhq.com",
+    "zone_id": "766dd80f982b2375dbcca6dcf34f7ab4",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomationlabs.com",
+    "zone_id": "894ec649054017b4265333099bb2827c",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomationsolutions.com",
+    "zone_id": "bb0ce8f27b38673557699a7da2183ed4",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomationstack.com",
+    "zone_id": "581e03c815e86829a631a6132c40c096",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myautomationsystems.com",
+    "zone_id": "90880ea8d4025f7f2dbdb4dfd0f750ed",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myprocessglobal.com",
+    "zone_id": "75fa86cbf26b1cc278ff9abad6136765",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myprocesshq.com",
+    "zone_id": "9e544c34706d11acf98e2774cb80f432",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myprocesssolutions.com",
+    "zone_id": "c96747338da9613ed1f0ec6411000b59",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myprocesstech.com",
+    "zone_id": "14066df9d1764ec79cf8e66202f45cdb",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "mysystemhq.com",
+    "zone_id": "704de201cbeeac080276e67cdc77513d",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "mytaskhq.com",
+    "zone_id": "c41e14c519081537aeaf0a0aba1cf0c7",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "mytasktech.com",
+    "zone_id": "b453f8d6055cbc2f91460bf9dc6b4799",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myworkflowglobal.com",
+    "zone_id": "9ac195787db86ea262b85f7306b643d7",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myworkflowhq.com",
+    "zone_id": "47e3f71a374af0e7892036866760808d",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myworkflowlabs.com",
+    "zone_id": "dd2b8a133627ea1cd518cbe6c31ad033",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myworkflowsuite.com",
+    "zone_id": "673882ed96505f7bc54de6dc37434516",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  },
+  {
+    "domain": "myworkflowtech.com",
+    "zone_id": "815c01e9e83daa8d7de04a2f0ba23126",
+    "nameservers": [
+      "clark.ns.cloudflare.com",
+      "cloe.ns.cloudflare.com"
+    ]
+  }
+]

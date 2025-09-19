@@ -1,7 +1,7 @@
 from functools import cache
 import requests
 from requests.exceptions import RequestException, Timeout
-from namecheapapi import DomainAPI
+from namecheap import Namecheap
 import os
 from faker import Faker
 
@@ -17,26 +17,66 @@ def get_my_ip(retries: int = 0) -> str:
         raise RuntimeError("Failed to retrieve IP. Ipify API request timed out.")
     except RequestException as e:
         raise RuntimeError(f"Failed to retrieve IP: {e}")
-    
+
 def assert_env_vars() -> bool:
     if not all([
-        os.getenv('NAMECHEAP_USER'),
-        os.getenv('NAMECHEAP_KEY'),
+        os.getenv('NAMECHEAP_USERNAME'),
+        os.getenv('NAMECHEAP_API_KEY'),
         os.getenv('NAMECHEAP_EXAMPLE_DOMAIN')
     ]):
         raise RuntimeError("Missing Namecheap environment variables.")
 
-NAMECHEAP = DomainAPI(
-    api_user=os.getenv('NAMECHEAP_USER'),
-    api_key=os.getenv('NAMECHEAP_KEY'),
-    username=os.getenv('NAMECHEAP_USER'),
+class NamecheapWrapper:
+    def __init__(self, nc):
+        self.nc = nc
+
+    def check(self, domain: str) -> dict:
+        result = self.nc.domains.check(domain)
+        return {domain: result[0].available if result else False}
+
+    def register(self, domain: str, address: dict, nameservers: list):
+        registrant = address
+        return self.nc.domains.create(
+            domain=domain,
+            registrant_first_name=registrant['FirstName'],
+            registrant_last_name=registrant['LastName'],
+            registrant_address1=registrant['Address1'],
+            registrant_city=registrant['City'],
+            registrant_state_province=registrant['StateProvince'],
+            registrant_postal_code=registrant['PostalCode'],
+            registrant_country=registrant['Country'],
+            registrant_phone=registrant['Phone'],
+            registrant_email_address=registrant['EmailAddress'],
+            nameservers=nameservers
+        )
+
+    def set_nameservers(self, domain: str, nameservers: list):
+        return self.nc.domains.set_nameservers(domain, nameservers)
+
+NAMECHEAP = NamecheapWrapper(Namecheap(
+    api_key=os.getenv('NAMECHEAP_API_KEY'),
+    username=os.getenv('NAMECHEAP_USERNAME'),
+    api_user=os.getenv('NAMECHEAP_API_USER', os.getenv('NAMECHEAP_USERNAME')),
     client_ip=get_my_ip(),
     sandbox=False
-)
+))
 
 @cache
 def get_address() -> dict:
-    return NAMECHEAP.get_contacts(os.getenv('NAMECHEAP_EXAMPLE_DOMAIN'))
+    domain_info = NAMECHEAP.nc.domains.info(os.getenv('NAMECHEAP_EXAMPLE_DOMAIN'))
+    return {
+        'Registrant': {
+            'FirstName': domain_info.registrant.first_name,
+            'LastName': domain_info.registrant.last_name,
+            'Address1': domain_info.registrant.address1,
+            'City': domain_info.registrant.city,
+            'StateProvince': domain_info.registrant.state_province,
+            'PostalCode': domain_info.registrant.postal_code,
+            'Country': domain_info.registrant.country,
+            'Phone': domain_info.registrant.phone,
+            'EmailAddress': domain_info.registrant.email_address
+        }
+    }
 
 def create_domain_csv(domains: list[dict[str, str | list]]) -> None:
     gen = Faker()
